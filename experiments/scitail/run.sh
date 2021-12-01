@@ -3,7 +3,7 @@
 # This is an example script to show how to made customized task
 #
 #
-if [[  $# -gt 1 ]] ; then
+if [[  $# -lt 2 ]] ; then
 	echo "Usage: $0 <model> <output dir>"
 	exit 1
 fi
@@ -35,7 +35,7 @@ case ${init,,} in
 	parameters=" --num_train_epochs 6 \
 	--warmup 100 \
 	--learning_rate 2e-5 \
-	--train_batch_size 32 \
+	--train_batch_size 2 \
 	--cls_drop_out 0.2 \
 	--max_seq_len 320"
 		;;
@@ -91,6 +91,7 @@ python -m DeBERTa.apps.run --model_config config.json  \
 	--do_train \
 	--task_dir . \
 	--task_name $Task \
-	--data_dir <Your race data directory> \
+	--data_dir  $cache_dir/scitail \
 	--init_model $init \
-	--output_dir $output_dir/$tag/$task  $parameters
+	--output_dir $output_dir/$tag/$task \
+	$parameters
