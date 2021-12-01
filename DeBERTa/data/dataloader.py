@@ -21,7 +21,8 @@ import threading
 import traceback
 import os
 import time
-from torch._six import string_classes, int_classes, FileNotFoundError
+from torch._six import string_classes
+int_classes = int
 
 IS_WINDOWS = sys.platform == "win32"
 if IS_WINDOWS:
