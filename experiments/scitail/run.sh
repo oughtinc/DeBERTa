@@ -3,8 +3,8 @@
 # This is an example script to show how to made customized task
 #
 #
-if [[  $# -lt 2 ]] ; then
-	echo "Usage: $0 <model> <output dir>"
+if [[  $# -lt 3 ]] ; then
+	echo "Usage: $0 <model> <output dir> <train_batch_size>"
 	exit 1
 fi
 
@@ -27,15 +27,14 @@ setup_scitail_data
 init=$1
 tag=$init
 
-
 output_dir=$2
+train_batch_size=$3
 
 case ${init,,} in
 	base-mnli)
 	parameters=" --num_train_epochs 6 \
 	--warmup 100 \
 	--learning_rate 2e-5 \
-	--train_batch_size 2 \
 	--cls_drop_out 0.2 \
 	--max_seq_len 320"
 		;;
@@ -43,7 +42,6 @@ case ${init,,} in
 	parameters=" --num_train_epochs 6 \
 	--warmup 100 \
 	--learning_rate 8e-6 \
-	--train_batch_size 32 \
 	--cls_drop_out 0.2 \
 	--max_seq_len 320"
 		;;
@@ -51,7 +49,6 @@ case ${init,,} in
 	parameters=" --num_train_epochs 6 \
 	--warmup 100 \
 	--learning_rate 7e-6 \
-	--train_batch_size 48 \
 	--cls_drop_out 0.2\
 	--fp16 True \
 	--max_seq_len 320"
@@ -60,7 +57,6 @@ case ${init,,} in
 	parameters=" --num_train_epochs 6 \
 	--warmup 100 \
 	--learning_rate 4e-6 \
-	--train_batch_size 48 \
 	--cls_drop_out 0.2 \
 	--fp16 True \
 	--max_seq_len 320"
@@ -69,7 +65,6 @@ case ${init,,} in
 	parameters=" --num_train_epochs 6 \
 	--warmup 100 \
 	--learning_rate 3e-6 \
-	--train_batch_size 48 \
 	--cls_drop_out 0.2 \
 	--fp16 True \
 	--max_seq_len 320"
@@ -94,4 +89,5 @@ python -m DeBERTa.apps.run --model_config config.json  \
 	--data_dir  $cache_dir/scitail \
 	--init_model $init \
 	--output_dir $output_dir/$tag/$task \
+	--train_batch_size $train_batch_size \
 	$parameters
