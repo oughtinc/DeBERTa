@@ -130,4 +130,4 @@ dataset_size = dataset_size, shuffle=True, **kwargs)
 
   def get_labels(self):
     """See base class."""
-    return ["neutral", "entails"]
+    return ["no", "yes"]
